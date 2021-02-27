@@ -31,8 +31,12 @@ spring:
       max-lifetime: 60000
       maximum-pool-size: 20
       minimum-idle: 1
-
-
 pebble:
   suffix:
   cache: false
+
+---
+spring:
+  profiles: test
+server:
+  port: 8000
