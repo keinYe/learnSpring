@@ -74,13 +74,8 @@ public class JsonAuthenticationFilter extends UsernamePasswordAuthenticationFilt
 	@Data
 	@AllArgsConstructor
 	@NoArgsConstructor
-	private static class AuthReq {
+	public class AuthReq {
 		private String username;
 		private String password;
-		public AuthReq(String username, String password) {
-			this.username = username;
-			this.password = password;
-		}
-
 	}
 }
