@@ -3,6 +3,7 @@ package com.keinye.spring.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -11,6 +12,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.access.ExceptionTranslationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
+import org.springframework.security.web.csrf.LazyCsrfTokenRepository;
 
 @Configuration
 @EnableWebSecurity
@@ -78,7 +82,20 @@ public class WebSecurityConfig {
 			// TODO 自动生成的方法存根
 			super.configure(http);
 		}
+		
+		private CsrfTokenRepository csrfTokenRepository() {
+			HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
+			repository.setHeaderName(CSRFUtil.CSRF_TOKEN_NAME);
+			repository.setHeaderName(CSRFUtil.CSRF_ATTRIBUTE_NAME);
+			return new LazyCsrfTokenRepository(repository);
+		}
+		
+		private JsonAuthenticationFilter authenticationFilter() throws Exception {
+			JsonAuthenticationFilter filter = new JsonAuthenticationFilter();
+			filter.setAuthenticationManager(authenticationManager());
+			return filter;
+		}
 	}
-	
+
 	
 }
