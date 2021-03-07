@@ -3,7 +3,6 @@ package com.keinye.spring.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -11,10 +10,14 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.access.ExceptionTranslationFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.security.web.csrf.LazyCsrfTokenRepository;
+
+import com.keinye.spring.common.PasswordUtil;
 
 @Configuration
 @EnableWebSecurity
@@ -69,7 +72,7 @@ public class WebSecurityConfig {
 	class ApiSecurityConfig extends WebSecurityConfigurerAdapter {
 		@Override
 		protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-			auth.userDetailsService(customUserDetailService);
+			auth.userDetailsService(customUserDetailService).passwordEncoder(PasswordUtil.getEncoder());
 		}
 		
 		@Override
@@ -79,8 +82,27 @@ public class WebSecurityConfig {
 		
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
-			// TODO 自动生成的方法存根
-			super.configure(http);
+/*
+            http
+            .addFilterAfter(new CsrfTokenResponseHeaderBindingFilter(), CsrfFilter.class)
+            .addFilterBefore(authenticationFilter(),
+                    UsernamePasswordAuthenticationFilter.class)
+            .exceptionHandling()
+            .authenticationEntryPoint(new RestAuthenticationEntryPoint())
+            .and()
+            .authorizeRequests()
+            .antMatchers(PATTERN_ADMIN).hasRole("ADMIN")
+            .antMatchers("/**").hasRole("USER")
+            .and()
+            .csrf()
+            .csrfTokenRepository(csrfTokenRepository())
+            .ignoringAntMatchers(LOGIN_URL, LOGOUT_URL)
+            .and()
+            .logout()
+            .logoutUrl(LOGOUT_URL)
+            .permitAll()
+            .logoutSuccessHandler(new AjaxLogoutSuccessHandler());
+*/
 		}
 		
 		private CsrfTokenRepository csrfTokenRepository() {
@@ -93,6 +115,9 @@ public class WebSecurityConfig {
 		private JsonAuthenticationFilter authenticationFilter() throws Exception {
 			JsonAuthenticationFilter filter = new JsonAuthenticationFilter();
 			filter.setAuthenticationManager(authenticationManager());
+			filter.setAuthenticationFailureHandler(new AjaxAuthenticationFailureHandler());
+			filter.setAuthenticationSuccessHandler(new AjaxAuthenticationSuccessHandler());
+			filter.setFilterProcessesUrl("logout");
 			return filter;
 		}
 	}

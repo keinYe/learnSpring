@@ -1,6 +1,8 @@
 package com.keinye.spring.common.struct;
 
 
+import java.io.IOException;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,16 +26,16 @@ public class Response<T> {
 		return new Response<>(true, 0, null, null, null, null);
 	}
 	
-	public static <T> Response<T> error(int errorCode, @NonNull String errorMessage) throws IllegalAccessException {
+	public static <T> Response<T> error(int errorCode, @NonNull String errorMessage) {
 		if (errorCode < 0) {
-			throw new IllegalAccessException(
+			throw new IllegalArgumentException(
 					String.format("errorCode should be > 0, got: %d", errorCode));
 		}
 		return new Response<T>(false, errorCode, errorMessage, null, null, null);
 	}
 	
     @SuppressWarnings("unchecked")
-	public static <T> Response<T> error(@NonNull ErrorCode errorCode) throws IllegalAccessException {
+	public static <T> Response<T> error(@NonNull ErrorCode errorCode) {
         return (Response<T>) error(errorCode.getErrorCode(), errorCode.getErrorMessage())
                 .description(errorCode.getDescription());
     }
