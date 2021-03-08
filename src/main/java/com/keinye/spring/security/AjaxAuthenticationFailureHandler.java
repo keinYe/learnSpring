@@ -13,9 +13,9 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
-import com.keinye.spring.common.JsonUtil;
 import com.keinye.spring.common.MyError;
 import com.keinye.spring.common.struct.Response;
+import com.keinye.spring.common.utils.JsonUtil;
 
 public class AjaxAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler{
 	@Override

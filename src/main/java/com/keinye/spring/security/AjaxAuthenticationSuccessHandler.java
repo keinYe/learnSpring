@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
-import com.keinye.spring.common.JsonUtil;
 import com.keinye.spring.common.struct.Response;
+import com.keinye.spring.common.utils.JsonUtil;
 
 public class AjaxAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler{
 	@Override

@@ -17,7 +17,7 @@ import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.security.web.csrf.LazyCsrfTokenRepository;
 
-import com.keinye.spring.common.PasswordUtil;
+import com.keinye.spring.common.utils.PasswordUtil;
 
 @Configuration
 @EnableWebSecurity

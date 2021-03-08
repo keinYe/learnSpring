@@ -1,4 +1,4 @@
-package com.keinye.spring.common;
+package com.keinye.spring.common.utils;
 
 import java.io.IOException;
 import java.io.Reader;

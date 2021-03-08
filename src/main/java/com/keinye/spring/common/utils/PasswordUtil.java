@@ -1,4 +1,4 @@
-package com.keinye.spring.common;
+package com.keinye.spring.common.utils;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
