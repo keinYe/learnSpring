@@ -18,6 +18,7 @@ import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.security.web.csrf.LazyCsrfTokenRepository;
 
 import com.keinye.spring.common.utils.PasswordUtil;
+import com.keinye.spring.properties.KeyProperties;
 
 @Configuration
 @EnableWebSecurity
@@ -26,6 +27,8 @@ public class WebSecurityConfig {
 	private TokenService tokenService;
 	@Autowired
 	private CustomUserDetailService customUserDetailService;
+	@Autowired
+	private KeyProperties prop;
 	
 	@Configuration
 	@Order(1)

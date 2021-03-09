@@ -28,10 +28,18 @@ spring:
       max-lifetime: 60000
       maximum-pool-size: 20
       minimum-idle: 1
-
+key:
+  pubKeyFile: "private"
+  priKeyFile: "publice"
+rsa:
+  key:
+    pubKeyFile: "private"
+    priKeyFile: "publice"
+    
 pebble:
   suffix:
   cache: false
+
 
 ---
 spring:
