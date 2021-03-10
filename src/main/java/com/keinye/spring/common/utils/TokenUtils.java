@@ -1,6 +1,8 @@
 package com.keinye.spring.common.utils;
 
 import java.io.Serializable;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.util.Date;
 import com.keinye.spring.entity.User;
 import io.jsonwebtoken.Claims;
@@ -13,7 +15,7 @@ public class TokenUtils implements Serializable {
 
 	private static final Long EXPIRATION = 604800L;
 
-	public String createToken(User user) {
+	public String createToken(User user, PrivateKey privateKey) {
 		try {
 			Date expirationDate = new Date(System.currentTimeMillis() + EXPIRATION * 1000);
 			String token = Jwts.builder()
@@ -22,7 +24,7 @@ public class TokenUtils implements Serializable {
 					.setExpiration(expirationDate)
 					.setIssuedAt(new Date())
 					.claim("", new Object())
-					.signWith(KeyUtils.getPrivateKey(), SignatureAlgorithm.RS256)
+					.signWith(privateKey)
 					.compact();
 			return String.format("Bearer %s", token);
 		} catch (Exception e) {
@@ -31,12 +33,12 @@ public class TokenUtils implements Serializable {
 		}
 	}
 	
-	public User validationToken(String token) {
+	public User validationToken(String token, PublicKey publicKey) {
 		try {
             // 解密 Token，获取 Claims 主体
             Claims claims = Jwts.parserBuilder()
                     // 设置公钥解密，以为私钥是保密的，因此 Token 只能是自己生成的，如此来验证 Token
-                    .setSigningKey(KeyUtils.getPublicKey())
+                    .setSigningKey(publicKey)
                     .build().parseClaimsJws(token).getBody();
             assert claims != null;
             // 验证 Token 有没有过期 过期时间
