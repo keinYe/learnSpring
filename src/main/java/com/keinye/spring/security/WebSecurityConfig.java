@@ -31,6 +31,19 @@ public class WebSecurityConfig {
 	private KeyProperties prop;
 	
 	@Configuration
+	class UserSecurityConfig extends WebSecurityConfigurerAdapter {
+		@Override
+		protected void configure(HttpSecurity http) throws Exception {
+			http.csrf().disable();
+			
+			http.authorizeRequests()
+				.antMatchers("/user").permitAll();
+			
+			http.headers().cacheControl();
+		}
+	}
+/*	
+	@Configuration
 	@Order(1)
 	class PredictorSecurityConfig extends WebSecurityConfigurerAdapter {
 		@Override
@@ -85,7 +98,7 @@ public class WebSecurityConfig {
 		
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
-/*
+
             http
             .addFilterAfter(new CsrfTokenResponseHeaderBindingFilter(), CsrfFilter.class)
             .addFilterBefore(authenticationFilter(),
@@ -105,7 +118,6 @@ public class WebSecurityConfig {
             .logoutUrl(LOGOUT_URL)
             .permitAll()
             .logoutSuccessHandler(new AjaxLogoutSuccessHandler());
-*/
 		}
 		
 		private CsrfTokenRepository csrfTokenRepository() {
@@ -124,6 +136,6 @@ public class WebSecurityConfig {
 			return filter;
 		}
 	}
-
+*/
 	
 }

@@ -14,7 +14,7 @@ spring:
     database-platform: org.hibernate.dialect.HSQLDialect
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
   datasource:
     url: jdbc:hsqldb:file:testdb
     username: sa
