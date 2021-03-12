@@ -16,7 +16,7 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: jdbc:hsqldb:file:testdb
+    url: jdbc:hsqldb:file:./production
     username: sa
     password:
     driver-class-name: org.hsqldb.jdbc.JDBCDriver
@@ -41,5 +41,10 @@ pebble:
 ---
 spring:
   profiles: test
+  jpa:
+    hibernate:
+      ddl-auto: create
+  datasource:
+    url: jdbc:hsqldb:file:./testdb
 server:
   port: 8000

@@ -12,11 +12,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.keinye.spring.BaseTest;
 import com.keinye.spring.entity.User;
 
 
 @SpringBootTest
-class UserRepositoryTest {
+class UserRepositoryTest extends BaseTest{
 	@Autowired
 	UserRepository userRepository;
 

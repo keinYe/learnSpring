@@ -38,4 +38,9 @@ public class User extends AbstractEntity{
 		return String.format("User[id=%s, name=%s, createdAt=%s, createdAtDataTime=%s]", 
 				getId(), getName(), getCreatedAt(), getCreatedDateTime());
 	}
+	
+	@Override
+	public int hashCode() {
+		
+	}
 }
