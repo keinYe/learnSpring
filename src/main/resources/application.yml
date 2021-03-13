@@ -28,6 +28,10 @@ spring:
       max-lifetime: 60000
       maximum-pool-size: 20
       minimum-idle: 1
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
 rsa:
   key:
     pubKeyFile: rsa_pub

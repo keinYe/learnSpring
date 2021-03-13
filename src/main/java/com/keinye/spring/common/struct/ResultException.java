@@ -2,6 +2,7 @@ package com.keinye.spring.common.struct;
 
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 
 
 @Getter
@@ -13,13 +14,14 @@ public class ResultException extends RuntimeException{
 	private String description;
 	private Object errorData;
 	
-	private ResultException(int errorCode, @NonNull String message, @NonNull String description) {
+	
+	private ResultException(int errorCode, @NonNull String message, String description) {
 		super(message);
 		this.errorCode = errorCode;
 		this.description = description;
 	}
 	
-	private ResultException(int errorCode, @NonNull String message, @NonNull String description,
+	private ResultException(int errorCode, @NonNull String message, String description,
 			Throwable cause) {
 		super(message, cause);
 		this.errorCode = errorCode;

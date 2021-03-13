@@ -41,6 +41,22 @@ public class User extends AbstractEntity{
 	
 	@Override
 	public int hashCode() {
-		
+		return name.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof User) {
+	        User p = (User) obj;
+	        boolean nameEquals = false;
+	        if (this.name == null && p.name == null) {
+	            nameEquals = true;
+	        }
+	        if (this.name != null) {
+	            nameEquals = this.name.equals(p.name);
+	        }
+	        return nameEquals;
+		}
+		return false;
 	}
 }

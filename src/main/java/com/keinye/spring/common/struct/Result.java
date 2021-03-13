@@ -7,17 +7,17 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-import com.fasterxml.jackson.databind.introspect.TypeResolutionContext.Empty;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NonNull;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Result<T> implements Serializable {
-	/**
-	 * 
-	 */
+	private static final Logger logger = LoggerFactory.getLogger(Result.class);
 	private static final long serialVersionUID = -5345139081725010614L;
 	
     private boolean success;
@@ -80,7 +80,7 @@ public class Result<T> implements Serializable {
     
     @SuppressWarnings("unchecked")
 	public static <T> Result<T> error(@NonNull ErrorCode errorCode) {
-    	return (Result<T>) error(errorCode.getErrorCode(), errorCode.getDescription())
+    	return (Result<T>) error(errorCode.getErrorCode(), errorCode.getErrorMessage())
     			.description(errorCode.getDescription());
     }
     
@@ -90,6 +90,7 @@ public class Result<T> implements Serializable {
             throw new IllegalStateException(
                     "description() could only be called if the result is not success");
         }
+        logger.info(description);
         this.description = description;
         return (Result<T>) this;
     }
@@ -114,7 +115,10 @@ public class Result<T> implements Serializable {
         if (this.isSuccess()) {
             return this.data;
         }
-
+        
+        logger.info("" + this.getErrorCode());
+        logger.info(this.getMessage());
+        logger.info(this.getDescription());
         throw ResultException.of(this.getErrorCode(), this.getMessage())
                 .description(this.getDescription())
                 .errorData(this.getErrorData());

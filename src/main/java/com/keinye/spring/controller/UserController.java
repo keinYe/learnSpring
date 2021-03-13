@@ -1,7 +1,8 @@
 package com.keinye.spring.controller;
 
-import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,22 +14,22 @@ import com.keinye.spring.common.struct.Result;
 import com.keinye.spring.entity.User;
 import com.keinye.spring.service.UserService;
 
-import netscape.javascript.JSObject;
-
-
 @RestController
 @RequestMapping("/user")
 public class UserController {
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	@Autowired
 	UserService userService;
 	
 	@GetMapping(value = "/all")
-	public List<User> getAll() {
+	public Result getAll() {
 		return userService.getUsers();
 	}
 	
 	@PostMapping(value = "/register", produces = "application/json")
 	public Result register(@RequestBody User user) {
-		return userService.register(user);
+		Result result = userService.register(user);
+		logger.info(result.toString());
+		return result;
 	}
 }
