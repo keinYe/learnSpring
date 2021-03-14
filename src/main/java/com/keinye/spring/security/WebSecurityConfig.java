@@ -34,6 +34,9 @@ public class WebSecurityConfig {
 	class UserSecurityConfig extends WebSecurityConfigurerAdapter {
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
+			http.antMatcher("/user")
+				.addFilterAfter(new ResultExceptionTranslationFilter(), ExceptionTranslationFilter.class);
+			
 			http.csrf().disable();
 			
 			http.authorizeRequests()

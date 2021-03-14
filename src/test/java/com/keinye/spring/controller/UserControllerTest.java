@@ -42,7 +42,6 @@ import com.keinye.spring.service.UserService;
 import junit.framework.Assert;
 
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
 @FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
@@ -51,11 +50,10 @@ class UserControllerTest extends BaseTest {
 	@Autowired
 	private MockMvc mockMvc;
 	@Autowired
-	private UserService userService;
-	@Autowired
 	private UserRepository userRepository;
 	
 	UserService mockuser = Mockito.mock(UserService.class);
+	
 
 	@Test
 	void testGetAll() throws Exception {
@@ -73,6 +71,10 @@ class UserControllerTest extends BaseTest {
 		assertTrue(dataResult.getData() instanceof List<?>);
 	}
 
+	/**
+	 * 用户注册测试
+	 * @throws Exception
+	 */
 	@Test
 	void testRegisterA() throws Exception {
 		String JSON = "{\"name\":\"register\",\"password\":\"register\"}";
@@ -89,6 +91,11 @@ class UserControllerTest extends BaseTest {
 		assertTrue(dataResult.getData() == null);
 	}
 	
+	/**
+	 * 用户注册错误测试：
+	 *    新注册用户名已存在
+	 * @throws Exception
+	 */
 	@Test
 	void testRegisterB() throws Exception {
 		String JSON = "{\"name\":\"register\",\"password\":\"register\"}";
@@ -100,8 +107,7 @@ class UserControllerTest extends BaseTest {
 		assertEquals(HttpStatus.OK.value(), response.getStatus());
 		Result dataResult = JsonUtil.fromJson(result.getResponse().getContentAsString(), Result.class);
 		assertFalse(dataResult == null);
-		assertTrue(dataResult.isSuccess());
-		assertEquals(0, dataResult.getErrorCode());
-		assertTrue(dataResult.getData() == null);
+		assertFalse(dataResult.isSuccess());
+		assertEquals(MyError.USER_IS_EXIST.getErrorCode(), dataResult.getErrorCode());
 	}
 }

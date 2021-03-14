@@ -10,6 +10,8 @@ import java.util.function.Supplier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -111,14 +113,12 @@ public class Result<T> implements Serializable {
         return errorCode;
     }
     
+    
     public T getData() {
         if (this.isSuccess()) {
             return this.data;
         }
-        
-        logger.info("" + this.getErrorCode());
-        logger.info(this.getMessage());
-        logger.info(this.getDescription());
+
         throw ResultException.of(this.getErrorCode(), this.getMessage())
                 .description(this.getDescription())
                 .errorData(this.getErrorData());

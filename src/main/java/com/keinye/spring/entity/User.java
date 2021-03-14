@@ -5,6 +5,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.keinye.spring.common.utils.PasswordUtil;
+
 
 @Entity
 @Table(name="users")
@@ -29,7 +31,7 @@ public class User extends AbstractEntity{
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		this.password = PasswordUtil.encoder(password);
 	}
 
 	

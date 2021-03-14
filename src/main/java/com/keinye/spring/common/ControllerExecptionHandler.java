@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -24,15 +25,7 @@ public class ControllerExecptionHandler extends ResponseEntityExceptionHandler {
 	protected ResponseEntity<Response> handleDomainException(
 			ResultException ex,
 			WebRequest request) {
-		logger.info(ex.toString());
-		return ResponseEntity.ok().body(Response.of(ex));
-	}
-	
-	@Override
-	protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,
-			HttpStatus status, WebRequest request) {
-		ex.printStackTrace();
-		// TODO 自动生成的方法存根
-		return super.handleExceptionInternal(ex, body, headers, status, request);
+		logger.info(ex.getMessage());
+		return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(Response.of(ex));
 	}
 }

@@ -12,7 +12,7 @@ import lombok.NonNull;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class Response<T> {
 	private boolean success;
-	private int error;
+	private int errorCode;
 	private String message;
 	private String description;
 	private T data;
