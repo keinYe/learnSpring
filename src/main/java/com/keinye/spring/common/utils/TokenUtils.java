@@ -15,7 +15,7 @@ public class TokenUtils implements Serializable {
 
 	private static final Long EXPIRATION = 604800L;
 
-	public String createToken(User user, PrivateKey privateKey) {
+	public static String createToken(User user, PrivateKey privateKey) {
 		try {
 			Date expirationDate = new Date(System.currentTimeMillis() + EXPIRATION * 1000);
 			String token = Jwts.builder()
@@ -23,7 +23,7 @@ public class TokenUtils implements Serializable {
 					.setAudience(user.getName())
 					.setExpiration(expirationDate)
 					.setIssuedAt(new Date())
-					.claim("", new Object())
+					.claim("id", user.getId())
 					.signWith(privateKey)
 					.compact();
 			return String.format("Bearer %s", token);
@@ -33,7 +33,7 @@ public class TokenUtils implements Serializable {
 		}
 	}
 	
-	public User validationToken(String token, PublicKey publicKey) {
+	public static User validationToken(String token, PublicKey publicKey) {
 		try {
             // 解密 Token，获取 Claims 主体
             Claims claims = Jwts.parserBuilder()

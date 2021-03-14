@@ -32,4 +32,10 @@ public class UserController {
 		logger.info(result.toString());
 		return result;
 	}
+	
+	@PostMapping(value = "/login", produces = "application/json")
+	public Result login(@RequestBody User user) {
+		Result result = userService.login(user);
+		return result;
+	}
 }

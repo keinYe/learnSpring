@@ -11,6 +11,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum MyError implements ErrorCode, Serializable {
 	USER_IS_EXIST(10001, "用户已存在"),
+	USER_NOT_EXIST(10002, "用户不存在"),
     TOKEN_NOT_FOUND(700026, "密钥不正确"),
     LOGIN_ERROR(700027, "登录失败"),
     LOGIN_ACCOUNT_DISABLED(700028, "帐户失效"),

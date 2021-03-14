@@ -31,7 +31,7 @@ public class User extends AbstractEntity{
 	}
 
 	public void setPassword(String password) {
-		this.password = PasswordUtil.encoder(password);
+		this.password = password;
 	}
 
 	
